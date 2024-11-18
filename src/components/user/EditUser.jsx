@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Button, Form, Col, Row } from 'react-bootstrap';
-import Layout from '../layout/Layout';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import * as userService from '../../services/user.service';
+import Layout from '../layout/Layout';
 
-const CreateUser = () => {
-
+const EditUser = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
+    const { userId } = useParams();
+
+    const populateUserFields = async () => {
+        try {
+            const user = await userService.getUser(userId);
+            setName(user.name);
+            setEmail(user.email);
+            setCity(user.city);
+            setCountry(user.country);
+        } catch (error) {
+            console.error(error);
+            toast.error(`User ${userId} could not been found!`);
+        }
+    };
 
     const submitForm = async (event) => {
         event.preventDefault();
@@ -21,35 +35,25 @@ const CreateUser = () => {
         };
 
         try {
-            const response = await userService.createUser(payload);
+            const response = await userService.editUser(userId, payload);
             if (response?.status) {
-                const getUserID = response?.user.id;
-                setName('');
-                setEmail('');
-                setCity('');
-                setCountry('');
-                toast.success(`User ${getUserID} created!`);
+                const userName = response.message.name;
+                toast.success(`User ${userName} updated!`);
             } else {
-                toast.error('Error creating the user!');
+                toast.error('Error updating the user!');
             }
         } catch (err) {
-            const getErrorMessage = () => {
-                const {
-                    data: {
-                        errors: { body }
-                    },
-                } = err.response;
-                const message = body[0]?.message
-                return message[0].toUpperCase() + message.substring(1);
-            }
-
-            toast.error(getErrorMessage());
+            toast.error(userService.getErrorMessage(err));
         }
     };
 
+    useEffect(() => {
+        populateUserFields();
+    }, [userId])
+
     return (
         <Layout>
-            <h3 className='text-center'>Create User</h3>
+            <h3 className='text-center'>Edit User</h3>
             <Row className="justify-content-center">
                 <Col lg={6}>
                     <Form>
@@ -89,14 +93,12 @@ const CreateUser = () => {
                                 onChange={(fieldElement) => setCountry(fieldElement.target.value)}
                             />
                         </Form.Group>
-                        <Button variant="primary" type="submit" onClick={submitForm}>Add User</Button>
+                        <Button variant="primary" type="submit" onClick={submitForm}>Edit User</Button>
                     </Form>
-
-
                 </Col>
             </Row>
         </Layout>
     )
 };
 
-export default CreateUser;
+export default EditUser;

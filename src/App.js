@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import CreateUser from "./components/user/CreateUser";
 import UsersList from "./components/user/UsersList";
 import GetUser from "./components/user/GetUser";
+import EditUser from "./components/user/EditUser";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/" element={<UsersList />} />
           <Route path="/create" element={<CreateUser />} />
           <Route path="/:userId" element={<GetUser />} />
+          <Route path="/edit/:userId" element={<EditUser />} />
         </Routes>
       </BrowserRouter>
     </>

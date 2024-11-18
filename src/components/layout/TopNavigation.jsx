@@ -10,6 +10,9 @@ const TopNavigation = () => {
           <Nav className="flex-grow-1 justify-content-end">
             <Nav.Link as={NavLink} to="/create">Create User</Nav.Link>
           </Nav>
+          <Nav className="flex-grow-1 justify-content-end">
+            <Nav.Link as={NavLink} to="/edit/:userId">Edit User</Nav.Link>
+          </Nav>
         </Container>
       </Navbar>
     </>
