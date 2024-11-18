@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import * as userService from '../../services/user.service';
 import { toast } from 'react-toastify';
 import { Card, Col, Row } from 'react-bootstrap';
-import Layout from './Layout';
+import Layout from '../layout/Layout';
 
 const GetUser = () => {
     const { userId } = useParams();
-    const getUserEndpoint = `http://localhost:4000/v1/user/${userId}`;
     const [user, setUser] = useState({});
 
     const fetchUser = async () => {
@@ -15,8 +14,8 @@ const GetUser = () => {
         fetchUser.isFetching = true;
 
         try {
-            const { data: apiResponse } = await axios.get(`${getUserEndpoint}`);
-            setUser(apiResponse);
+            const response = await userService.getUser(userId);
+            setUser(response);
         } catch (err) {
             setUser(null);
             const getErrorMessage = () => {

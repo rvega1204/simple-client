@@ -1,15 +1,13 @@
-import axios from "axios";
+import * as userService from '../../services/user.service';
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import Layout from "./Layout";
+import Layout from "../layout/Layout";
 
 const UsersList = () => {
-  const getAllUsersEndpoint = "http://localhost:4000/v1/user/all";
   const [users, setUsers] = useState({});
-
   const fetchUsers = async () => {
-    const { data: apiResponse } = await axios.get(`${getAllUsersEndpoint}`);
-    setUsers(apiResponse);
+    const users = await userService.getAllUsers();
+    setUsers(users);
   };
 
   useEffect(() => {

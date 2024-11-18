@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Button, Form, Col, Row } from 'react-bootstrap';
-import Layout from './Layout';
+import Layout from '../layout/Layout';
+import * as userService from '../../services/user.service';
 
 const CreasteUser = () => {
-    const createUserEndpoint = 'http://localhost:4000/v1/user';
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [city, setCity] = useState('');
@@ -21,9 +21,9 @@ const CreasteUser = () => {
         };
 
         try {
-            const { data: apiResponse } = await axios.post(`${createUserEndpoint}`, payload);
-            if (apiResponse?.status) {
-                const getUserID = apiResponse?.user.id;
+            const response = await userService.createUser(payload);
+            if (response?.status) {
+                const getUserID = response?.user.id;
                 setName('');
                 setEmail('');
                 setCity('');
