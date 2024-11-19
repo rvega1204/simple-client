@@ -24,7 +24,6 @@ const EditUser = () => {
                 toast.error(user.message)
             }
         } catch (error) {
-            console.error(error);
             toast.error(`User ${userId} could not been found!`);
         }
     };

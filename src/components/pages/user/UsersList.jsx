@@ -1,15 +1,17 @@
 import * as userService from '../../../services/user.service';
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button, Spinner } from "react-bootstrap";
 import Layout from "../../layout/Layout";
-import { NavLink } from 'react-router-dom';
+import UserCard from '../../user/UserCard';
 
 const UsersList = () => {
   const [users, setUsers] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchUsers = async () => {
     try {
+      setIsLoading(true);
       const users = await userService.getAllUsers();
       setUsers(users);
     } catch (error) {
@@ -20,6 +22,8 @@ const UsersList = () => {
       };
 
       setErrorMessage(getErrorMessage());
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,36 +33,22 @@ const UsersList = () => {
 
   return (
     <Layout>
-      {errorMessage ? (
-        <h3 className='text-center text-danger fw-bold'>{errorMessage}</h3>
+      {isLoading ? (
+        <div className="text-center">
+          <Spinner animation="grow" role="status" />
+        </div>
+      ) : errorMessage ? (
+        <h3 className="text-center text-danger fw-bold">{errorMessage}</h3>
       ) : (
         <>
           <h3 className="text-center mb-3">Users</h3>
-          {Object.values(users).map((user) => (
-            <Row className="justify-content-center" key={user.id}>
-              <Col lg={4}>
-                <Card>
-                  <Card.Body>
-                    <h4>{user.name}</h4>
-                    <p>{user.email}</p>
-
-                    {user.city && user.country && (
-                      <p>
-                        {user.city} - {user.country}
-                      </p>
-                    )}
-                    <Button
-                      variant='secondary'
-                      as={NavLink}
-                      to={`/edit/${user.id}`}
-                    >
-                      Edit User
-                    </Button>
-                  </Card.Body>
-                </Card>
+          <Row className="justify-content-center">
+            {Object.values(users).map((user) => (
+              <Col lg={3} className="d-flex p-1" key={user.id}>
+                <UserCard data={user} />
               </Col>
-            </Row>
-          ))}
+            ))}
+          </Row>
         </>
       )}
     </Layout>
