@@ -20,8 +20,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "ava",
     "eject": "react-scripts eject"
+  },
+  "ava": {
+    "require": [
+      "@babel/register"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -40,5 +45,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@babel/register": "^7.25.9",
+    "ava": "^6.2.0",
+    "axios-mock-adapter": "^2.1.0"
   }
 }

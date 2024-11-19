@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL for the API
-const baseApiUrl = 'http://localhost:4000/v1';
+export const baseApiUrl = 'http://localhost:4000/v1';
 const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -16,16 +16,8 @@ const headers = {
  */
 export const createUser = async (payload) => {
     const createUserEndpoint = `${baseApiUrl}/user`; // Endpoint for user creation
-
-    // Send a POST request
-    const response = await fetch(createUserEndpoint, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload),
-    });
-
-    // Parse and return the JSON response
-    return await response.json();
+    const { data: apiResponse } = await axios.post(`${createUserEndpoint}`, payload);
+    return apiResponse;
 };
 
 /**

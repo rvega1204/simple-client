@@ -1,6 +1,6 @@
 import * as userService from '../../../services/user.service';
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import Layout from "../../layout/Layout";
 import UserCard from '../../user/UserCard';
 
