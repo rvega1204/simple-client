@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const Footer = () => {
     return (
         <Container>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center mt-1">
                 <Col md={{ span: 3, offset: 1 }}>
                     <h4 className="text-decoration-underline">Home</h4>
                     <NavLink to='/' className='text-muted'>Home</NavLink>

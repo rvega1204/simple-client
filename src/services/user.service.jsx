@@ -2,6 +2,10 @@ import axios from "axios";
 
 // Base URL for the API
 const baseApiUrl = 'http://localhost:4000/v1';
+const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+};
 
 /**
  * Creates a new user by sending a POST request to the API.
@@ -11,9 +15,17 @@ const baseApiUrl = 'http://localhost:4000/v1';
  * @throws {Error} - Throws an error if the API call fails.
  */
 export const createUser = async (payload) => {
-    const createUserEndpoint = `${baseApiUrl}/user`;
-    const { data: apiResponse } = await axios.post(`${createUserEndpoint}`, payload);
-    return apiResponse;
+    const createUserEndpoint = `${baseApiUrl}/user`; // Endpoint for user creation
+
+    // Send a POST request
+    const response = await fetch(createUserEndpoint, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+    });
+
+    // Parse and return the JSON response
+    return await response.json();
 };
 
 /**
@@ -26,6 +38,7 @@ export const createUser = async (payload) => {
  */
 export const editUser = async (userId, payload) => {
     const editUserEndpoint = `${baseApiUrl}/user/${userId}`;
+    // An example with axios
     const { data: apiResponse } = await axios.put(`${editUserEndpoint}`, payload);
     return apiResponse;
 };
@@ -39,8 +52,8 @@ export const editUser = async (userId, payload) => {
  */
 export const getUser = async (userId) => {
     const getUserEndpoint = `${baseApiUrl}/user/${userId}`;
-    const { data: apiResponse } = await axios.get(getUserEndpoint);
-    return apiResponse;
+    const rawData = await fetch(getUserEndpoint);
+    return rawData.json();
 };
 
 /**
@@ -51,8 +64,8 @@ export const getUser = async (userId) => {
  */
 export const getAllUsers = async () => {
     const getAllUsersEndpoint = `${baseApiUrl}/user/all`;
-    const { data: apiResponse } = await axios.get(getAllUsersEndpoint);
-    return apiResponse;
+    const rawData = await fetch(getAllUsersEndpoint);
+    return rawData.json();
 };
 
 /**
@@ -66,8 +79,12 @@ export const getAllUsers = async () => {
  */
 export const deleteUser = async (userId) => {
     const deleteUserEndpoint = `${baseApiUrl}/user/${userId}`;
-    const { data: apiResponse } = await axios.delete(deleteUserEndpoint);
-    return apiResponse;
+    const rawData = await fetch(deleteUserEndpoint, {
+        method: 'DELETE',
+        headers
+    });
+
+    return rawData.json();
 };
 
 /**

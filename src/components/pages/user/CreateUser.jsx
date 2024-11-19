@@ -32,15 +32,15 @@ const CreateUser = () => {
             // Call the API to create a user.
             const response = await userService.createUser(payload);
 
-            if (response?.status) {
-                const getUserID = response?.user.id; // Get the new user's ID.
+            if (response?.status && response?.user) {
+                const userName = response.user?.name; // Get the new user's name
                 // Reset form inputs on successful creation.
                 setName('');
                 setEmail('');
                 setCity('');
                 setCountry('');
                 // Show a success toast notification.
-                toast.success(`User ${getUserID} created!`);
+                toast.success(`User ${userName} created!`);
             } else {
                 // Show an error toast notification if status is not true.
                 toast.error('Error creating the user!');

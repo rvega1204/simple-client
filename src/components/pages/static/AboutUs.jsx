@@ -10,7 +10,7 @@ const AboutUs = () => {
                     <p>
                         This project is a learning initiative to explore modern web development technologies.
                         We combine <strong>React</strong> for building interactive user interfaces with
-                        <strong>Node.js and Express.js</strong> to create a reliable backend architecture.
+                        <strong> Node.js and Express.js</strong> to create a reliable backend architecture.
                     </p>
 
                     <h2>Why This Project?</h2>
