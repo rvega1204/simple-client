@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import * as userService from '../../services/user.service';
-import Layout from '../layout/Layout';
+import * as userService from '../../../services/user.service';
+import Layout from '../../layout/Layout';
 
 const EditUser = () => {
     const [name, setName] = useState('');
@@ -93,7 +93,22 @@ const EditUser = () => {
                                 onChange={(fieldElement) => setCountry(fieldElement.target.value)}
                             />
                         </Form.Group>
-                        <Button variant="primary" type="submit" onClick={submitForm}>Edit User</Button>
+                        <Button
+                            variant="primary"
+                            type="submit"
+                            className='m-1'
+                            onClick={submitForm}
+                        >
+                            Edit User
+                        </Button>
+                        <Button
+                            variant='danger'
+                            as={NavLink}
+                            to={`/delete/${userId}`}
+                            className='m-1'
+                        >
+                            Delete User
+                        </Button>
                     </Form>
                 </Col>
             </Row>
