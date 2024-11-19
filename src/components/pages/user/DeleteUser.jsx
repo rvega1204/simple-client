@@ -13,7 +13,7 @@ import * as userService from '../../../services/user.service';
  */
 const DeleteUser = () => {
     // Constants
-    const DELAY_BEFORE_REDIRECTION_MS = 2500; // Delay before redirection in milliseconds.
+    const DELAY_BEFORE_REDIRECTION_MS = 2000; // Delay before redirection in milliseconds.
 
     // Get the user ID from the route parameters.
     const { userId } = useParams();
@@ -58,6 +58,8 @@ const DeleteUser = () => {
             if (response?.status) {
                 toast.success('User removed!');
                 timeOutFunc();
+            } else if (response.message) {
+                toast.error(response.message);
             } else {
                 toast.error(`Error removing the user ${userId}`);
             }

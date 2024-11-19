@@ -14,9 +14,9 @@ const UsersList = () => {
       setUsers(users);
     } catch (error) {
       const getErrorMessage = () => {
-        const { data: { message } } = error.response;
+        const apiErrorMessage = error?.response?.data?.message;
 
-        return message;
+        return apiErrorMessage ?? 'Error connecting to the server';
       };
 
       setErrorMessage(getErrorMessage());

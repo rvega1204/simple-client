@@ -15,10 +15,14 @@ const EditUser = () => {
     const populateUserFields = async () => {
         try {
             const user = await userService.getUser(userId);
-            setName(user.name);
-            setEmail(user.email);
-            setCity(user.city);
-            setCountry(user.country);
+            if (user?.id) {
+                setName(user.name);
+                setEmail(user.email);
+                setCity(user.city);
+                setCountry(user.country);
+            } else if (!user?.status) {
+                toast.error(user.message)
+            }
         } catch (error) {
             console.error(error);
             toast.error(`User ${userId} could not been found!`);

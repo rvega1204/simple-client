@@ -17,6 +17,16 @@ const CreateUser = () => {
     const [country, setCountry] = useState('');
 
     /**
+     * Method to get the response error
+     * @param {*} response 
+     * @returns format error
+     */
+    const getErrorMessage = (response) => {
+        let errorMessage = response?.errors?.body[0]?.message;
+        return errorMessage = errorMessage[0].toUpperCase() + errorMessage.substring(1) || 'Error creating the user';
+    }
+
+    /**
      * Handles form submission, creates a new user by calling the API, 
      * and manages success/error notifications.
      * 
@@ -41,6 +51,8 @@ const CreateUser = () => {
                 setCountry('');
                 // Show a success toast notification.
                 toast.success(`User ${userName} created!`);
+            } else if (response?.errors) {
+                toast.error(getErrorMessage(response));
             } else {
                 // Show an error toast notification if status is not true.
                 toast.error('Error creating the user!');

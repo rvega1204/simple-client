@@ -64,8 +64,8 @@ export const getUser = async (userId) => {
  */
 export const getAllUsers = async () => {
     const getAllUsersEndpoint = `${baseApiUrl}/user/all`;
-    const rawData = await fetch(getAllUsersEndpoint);
-    return rawData.json();
+    const { data: apiResponse } = await axios.get(getAllUsersEndpoint);
+    return apiResponse;
 };
 
 /**
